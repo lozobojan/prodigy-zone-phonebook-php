@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<?php include('../navbar.php'); ?>
 <div class="container">
     <h3 class="text-center mt-3">Izmjena države</h3>
 

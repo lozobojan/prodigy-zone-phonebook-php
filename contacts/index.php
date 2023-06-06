@@ -23,7 +23,10 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+<?php include('../navbar.php'); ?>
 <div class="container">
+
     <h3 class="text-center mt-3">Lista kontakta</h3>
 
     <div class="row">
@@ -51,8 +54,7 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Ime</th>
-                        <th>Prezime</th>
+                        <th>Ime i prezime</th>
                         <th>Broj telefona</th>
                         <th>Email</th>
                         <th></th>
@@ -74,8 +76,7 @@
                            echo "
                                 <tr>
                                     <td>{$row['id']}</td>
-                                    <td>{$row['firstName']}</td>
-                                    <td>{$row['lastName']}</td>
+                                    <td><a href='./show.php?id={$row['id']}'>{$row['firstName']} {$row['lastName']}</a></td>
                                     <td>{$row['phone']}</td>
                                     <td>{$row['email']}</td>
                                     <td> <a href='./edit.php?id={$row['id']}'>izmjena</a> </td>
@@ -91,7 +92,7 @@
 
         </div>
         <div class="col-6">
-            <form action="./save.php" method="POST">
+            <form action="./save.php" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="0"><!--dodato za dobijanje id-a -->
                 <label for="firstName">Ime:</label>
                 <input type="text" id="firstName" class="form-control" name="firstName">
@@ -121,6 +122,8 @@
                         echo "<p class='text-danger'>Morate unijeti ispravan email!</p>";
                     }
                     ?>
+                <label for="profilePhoto">Profilna fotografija:</label>
+                <input type="file" name="profilePhoto" class="form-control mb-3" id="profilePhoto">
                 
                 <?php
                     $queryHobbies = "SELECT * FROM hobbies";

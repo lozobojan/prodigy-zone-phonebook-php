@@ -1,6 +1,7 @@
 <?php
     include '../db.php';
-    
+//    var_dump($_FILES);
+//    exit;
     $firstName = $_POST['firstName'];
     $lastName = $_POST['lastName'];
     $phone = $_POST['phone'];
@@ -25,9 +26,25 @@
         header('location: ./index.php?error=8');
         exit;
     }
+
+    $newName = '';
+    if(isset($_FILES['profilePhoto'])){
+        $profilePhoto = $_FILES['profilePhoto'];
+        $tmpLocation = $profilePhoto['tmp_name'];
+        $originalName = $profilePhoto['name'];
+        $originalExtensionArr = explode('.', $originalName);
+        $originalExtension = end($originalExtensionArr);
+
+        $uploadDir = '../uploads/profile_photos/';
+        $newName = uniqid().".".$originalExtension;
+
+        copy($tmpLocation, $uploadDir.$newName);
+    }
     
 
-    $query = "INSERT INTO contacts (firstName, lastName, phone, email, user_id) VALUES ('$firstName', '$lastName','$phone','$email', $user_id)";
+    $query = "INSERT INTO contacts (firstName, lastName, phone, email, user_id, profilePhotoPath) 
+                VALUES 
+                ('$firstName', '$lastName','$phone','$email', $user_id, '$newName')";
     $result = mysqli_query($connection, $query);
 
     // new contact ID
